@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <title>NGO Create an Event</title>
+    <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="../assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
+    <link href="../assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <link href="../assets/plugins/c3-master/c3.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/colors/blue.css" id="theme" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-firestore.js"></script>
+    <style>
+        form {
+  margin-top: 50px;
+  width: 75%;
+  margin-left: 30px;
+  padding: 100px;
+  padding-bottom: 20px;
+  padding-top: 0px;
+  padding-left: 200px;
+}
+
+input[type='submit'] {
+  background-color: lightblue;
+  color: white;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 20px;
+}
+input[type='submit']:hover {
+  background-color: darkcyan;
+}
+
+input[type='text'] {
+  width: 75%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+}
+table {
+  display: inline-table;
+}
+table,
+tr {
+  width: 100%;
+}
+
+input[type='text']:focus {
+  border: 3px solid #555;
+}
+
+textarea {
+  font-style: Verdana;
+  width: 75%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+}
+
+textarea[type='text']:focus {
+  border: 3px solid #555;
+}
+.For {
+  padding: 100px;
+  padding-bottom: 50px;
+  padding-top: 0;
+}
+
+.Choice {
+  margin-right: 20px;
+  margin-bottom: 30px;
+  display: inline-block;
+  margin-top: 30px;
+}
+.name {
+  display: inline;
+}
+.X {
+  width: 150px;
+}
+td {
+}
+    </style>
+</head>
+<body class="fix-header fix-sidebar card-no-border">
+    <div id="main-wrapper">
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-toggleable-sm navbar-light">
+                   <div class="navbar-collapse">
+                    <ul class="navbar-nav mr-auto mt-md-0">
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <li class="nav-item hidden-sm-down search-box"> <a class="nav-link hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+                            <form class="app-search">
+                                <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
+                        </li>
+                        <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Login / Sign UP</span></a>
+                            <div class="dropdown-menu scale-up-left">
+                                <ul class="mega-dropdown-menu row">
+                                    
+                                    <li class="col-lg-3  m-b-30">
+                                        <h4 class="m-b-20">Sign Up</h4>
+                                        <form>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="exampleInputname1" placeholder="Enter Name"> </div>
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" placeholder="Enter email"> </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Message"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-info">Submit</button>
+                                        </form>
+                                    </li>
+                                      <li class="col-lg-3  m-b-30">
+                                        <h4 class="m-b-20">LogIn</h4>
+                                        <form>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="exampleInputname1" placeholder="Enter Name"> </div>
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" placeholder="Enter email"> </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Message"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-info">Submit</button>
+                                        </form>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav my-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
+                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox scale-up">
+                                <ul>
+                                    <li>
+                                        <div class="drop-title">Notifications</div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center">
+                                            <a href="#">
+                                                <div class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span> </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="btn btn-success btn-circle"><i class="ti-calendar"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="btn btn-info btn-circle"><i class="ti-settings"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="btn btn-primary btn-circle"><i class="ti-user"></i></div>
+                                                <div class="mail-contnet">
+                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- User profile -->
+                <div class="user-profile" style="background: url(../assets/images/background/user-info.jpg) no-repeat;">
+                    <!-- User profile image -->
+                    <div class="profile-img"> <img src="../assets/images/users/profile.png" alt="user" /> </div>
+                    <!-- User profile text-->
+                    <div class="profile-text"> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"></a>
+                        <div class="dropdown-menu animated flipInY"> <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a> <a href="#" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a> <a href="#" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
+                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
+                            <div class="dropdown-divider"></div> <a href="login.html" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a> </div>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="nav-small-cap">PERSONAL</li>
+                                                
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-map-marker"></i><span class="hide-menu">Maps</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="map-google.html">Google Maps</a></li>
+                                <li><a href="map-vector.html">Vector Maps</a></li>
+                            </ul>
+                        </li>                         
+                    </ul>
+                </nav>
+            </div> 
+            <div class="sidebar-footer">
+                <a href="" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a> </div>
+         </aside>
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div class="row page-titles">
+                    <div class="col-md-5 col-8 align-self-center">
+                        <h3 class="text-themecolor">Welcome</h3>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Index</a></li>
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                    </div>
+                </div>   
+              </div>
+                  <form action="" method="post" onsubmit="return validate()" name="myForm">
+      <table>
+        <tr>
+          <td class="X">
+            <h4>Event Name :</h4>
+          </td>
+
+          <td>
+            <input
+              type="text"
+              placeholder="Enter Event name"
+              class="name"
+              id="Event"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="X">
+            <h4>Address :</h4>
+          </td>
+          <td>
+            <input
+              type="text"
+              placeholder="Enter Address name"
+              class="name"
+              id="Add"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="X">
+            <h4>Host's Name :</h4>
+          </td>
+          <td>
+            <input
+              type="text"
+              placeholder="Enter Host's name"
+              class="name"
+              id="Host"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="X">
+            <h4>Host's Email ID</h4>
+          </td>
+          <td>
+            <input
+              type="text"
+              placeholder="Enter Host's Email ID"
+              name="email id"
+              id="Email"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="X">
+            <h4>Date :</h4>
+          </td>
+          <td>
+            <input
+              type="date"
+              placeholder="Enter Host's Email ID"
+              name="emailid"
+              id="date"
+              class="X"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td class="X">
+            <h4>Phone no.:</h4>
+          </td>
+          <td>
+            <input
+              type="text"
+              placeholder="Enter phone number"
+              name="phone no."
+              maxlength="10"
+              id="Phone"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4 class="X">Detailed Description</h4>
+          </td>
+          <td>
+            <textarea
+              type="text"
+              placeholder="Drop a message"
+              name=" description"
+              rows="3"
+              cols="50"
+              id="Desc"
+              style="margin-left: 20px;"
+            >
+            </textarea>
+          </td>
+        </tr>
+      </table>
+
+      <br /><br />
+
+      
+    </form>
+           <input type="submit" id="Sub" value="Submit" style="margin-left: 500px" />
+                     </div>
+    </div>
+    <script src="../assets/plugins/jquery/jquery.min.js"></script>
+    <script src="../assets/plugins/bootstrap/js/tether.min.js"></script>
+    <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/jquery.slimscroll.js"></script>
+    <script src="js/waves.js"></script>
+    <script src="js/sidebarmenu.js"></script>
+    <script src="../assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="../assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="../assets/plugins/chartist-js/dist/chartist.min.js"></script>
+    <script src="../assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="../assets/plugins/d3/d3.min.js"></script>
+    <script src="../assets/plugins/c3-master/c3.min.js"></script>
+    <script src="js/dashboard1.js"></script>
+    <script src="../assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    <script src="js/config.js"></script>
+<script src="js/CreateanEvent.js"></script>
+</body>
+</html>
